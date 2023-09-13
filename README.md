@@ -1,6 +1,6 @@
-# AutoNav-Interpreter
+# AutoNav Interpreter
 
-## Incomming directions from server format (JSON)
+## Incoming directions from server format (JSON)
 
 ```json
 {
