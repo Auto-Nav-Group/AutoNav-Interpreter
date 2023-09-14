@@ -1,26 +1,32 @@
 package net.autonav;
 
+import net.autonav.HTTP.HTTPManager;
+import net.autonav.Queue.QueueInput;
+
+import java.io.IOException;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class Main {
     Data data = new Data();
     String id = data.genID();
 
-    public static void main(String[] args) {
-        int n = 6;
-        String alphaStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        + "0123456789"
-        + "abcdefghijklmnopqrstuvwxyz";
+    public static void main(String[] args) throws IOException {
+        HTTPManager.initConnections();
 
-        StringBuilder sb = new StringBuilder(n);
-        for (int i=0;i<n;i++) {
-            int index = (int)(alphaStr.length() * Math.random());
+        QueueInput queueInput = new QueueInput("test", 1, "test");
+        QueueInput queueInput2 = new QueueInput("test2", 2, "test2");
+        QueueInput queueInput3 = new QueueInput("test3", 3, "test3");
+        QueueInput queueInput4 = new QueueInput("test4", 4, "test4");
 
-            sb.append(alphaStr.charAt(index));            
+        Queue<QueueInput> movementQueue = new PriorityQueue<>();
+        movementQueue.add(queueInput);
+        movementQueue.add(queueInput3);
+        movementQueue.add(queueInput2);
+        movementQueue.add(queueInput4);
+
+        while(!movementQueue.isEmpty()) {
+            System.out.println(movementQueue.poll().getData());
         }
-        sb.insert(3, "-", 0, 1);
-        System.out.println(sb.toString());
-    }
-
-    public void buildDataJson() {
-        
     }
 }
