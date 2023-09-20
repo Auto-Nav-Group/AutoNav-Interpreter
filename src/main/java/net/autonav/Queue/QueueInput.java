@@ -12,8 +12,12 @@ public class QueueInput implements Comparable<QueueInput> {
         validatePriority(priority);
     }
 
+    /**
+     * 
+     * @param priority Integer associated with respective priority
+     */
     private void validatePriority(int priority) {
-        if (priority < 0 || priority > 4) {
+        if (priority < 0 || priority > 5) {
             throw new IllegalArgumentException("Priority must be between 0 and 4");
         }
     }
