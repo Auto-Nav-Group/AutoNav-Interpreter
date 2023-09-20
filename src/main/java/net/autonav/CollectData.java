@@ -3,7 +3,7 @@ package net.autonav;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Data {
+public class CollectData {
     private Map<String, String> data = new HashMap<>();
 
     private long unix = System.currentTimeMillis();

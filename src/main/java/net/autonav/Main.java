@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Main {
-    Data data = new Data();
+    CollectData data = new CollectData();
     String id = data.genID();
 
     public static void main(String[] args) throws IOException {
