@@ -3,6 +3,8 @@ package net.autonav.HTTP;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import net.autonav.Queue.InsertToQueue;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +23,7 @@ public class HTTPManager {
         }
     }
 
-    public static void handleHttpExchange(HttpExchange t, ObjectMapper mapper) throws IOException {
-        t.getResponseHeaders().set("Content-Type", "application/json");
+    public static void handleHttpExchange(@NotNull HttpExchange t, ObjectMapper mapper) throws IOException {
         InputStream is = t.getRequestBody();
         StringBuilder reqBody = new StringBuilder();
         int bytesRead;
@@ -31,8 +32,10 @@ public class HTTPManager {
             reqBody.append(new String(buffer, 0, bytesRead));
         }
 
-        Map jsonMap = mapper.readValue(reqBody.toString(), Map.class);
-        System.out.println(jsonMap);
+        String data = reqBody.toString();
+        System.out.println(data);
+        new InsertToQueue(data);
+        InsertToQueue.insert();
     }
 
     public static void initConnections() throws IOException {
@@ -41,5 +44,15 @@ public class HTTPManager {
         MalfunctionStream.initConnection();
         CommandStream.initConnection();
         MovementStream.initConnection();
+        System.out.println("All streams started");
+    }
+
+    public static void closeConnections() {
+        DataRequestStream.closeConnection();
+        OverrideStream.closeConnection();
+        MalfunctionStream.closeConnection();
+        CommandStream.closeConnection();
+        MovementStream.closeConnection();
+        System.out.println("All streams closed");
     }
 }

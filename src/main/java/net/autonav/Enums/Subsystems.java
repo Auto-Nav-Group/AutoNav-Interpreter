@@ -2,5 +2,6 @@ package net.autonav.Enums;
 
 public enum Subsystems {
     DRIVETRAIN,
-    LIDAR
+    LIDAR,
+    SYSTEM
 }

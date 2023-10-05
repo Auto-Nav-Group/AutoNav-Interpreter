@@ -11,6 +11,7 @@ public class MalfunctionStream {
         server.createContext("/malfunction", new MalfunctionHandler());
     }
 
+
     static class MalfunctionHandler implements com.sun.net.httpserver.HttpHandler {
         private final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         @Override

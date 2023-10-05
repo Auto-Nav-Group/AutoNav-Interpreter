@@ -1,5 +1,7 @@
 package net.autonav.Queue;
 
+import org.jetbrains.annotations.NotNull;
+
 public class QueueInput implements Comparable<QueueInput> {
     private String id;
     private int priority;
@@ -10,10 +12,10 @@ public class QueueInput implements Comparable<QueueInput> {
         this.priority = priority;
         this.data = data;
         validatePriority(priority);
+        System.out.println("QueueInput created with priority " + priority);
     }
 
     /**
-     * 
      * @param priority Integer associated with respective priority
      */
     private void validatePriority(int priority) {
@@ -23,7 +25,7 @@ public class QueueInput implements Comparable<QueueInput> {
     }
 
     @Override
-    public int compareTo(QueueInput o) {
+    public int compareTo(@NotNull QueueInput o) {
         return o.priority > this.priority ? 1 : -1;
     }
 

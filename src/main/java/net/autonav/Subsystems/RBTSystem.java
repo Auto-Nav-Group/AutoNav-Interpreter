@@ -1,0 +1,124 @@
+package net.autonav.Subsystems;
+
+import jakarta.persistence.Id;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class RBTSystem {
+    public static void convControl() {}
+
+    static class Streams {}
+    public static class Logs {
+        @Id
+        private static int id;
+        private static final File logDir = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Logs");
+        static {
+            for (File file : Objects.requireNonNull(logDir.listFiles())) {
+                if (file.exists()) {
+                    id++;
+                }
+            }
+        }
+        private static final File logFile = new File(logDir, id + ".txt");
+
+        public static void newLog() {
+            if (!logFile.exists()) {
+                try {
+                    if (logFile.createNewFile()) {
+                        System.out.println("Log file created");
+                        System.out.println("Log file path: " + logFile.getAbsolutePath());
+                    } else {
+                        System.out.println("Log file already exists");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("Log file already exists at " + logFile.getAbsolutePath());
+                newLog();
+            }
+        }
+
+        public static void log(String log, LogLevel level) {
+            try {
+                FileWriter logWriter = new FileWriter(logFile, true);
+                logWriter.write("[" + level + "] " + log + "\n");
+                logWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static void log(String log, LogLevel level, Integer id) {
+            try {
+                File logFile = new File(logDir, id + ".txt");
+                FileWriter logWriter = new FileWriter(logFile, true);
+                logWriter.write("[" + level + "] " + log + "\n");
+                logWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static void analyzeLog(Integer id) {
+            List<String> lines = getStrings(id);
+            int info = 0;
+            int warn = 0;
+            int error = 0;
+            int fatal = 0;
+            for (String line : lines) {
+                if (line.contains("[INFO]")) {
+                    info++;
+                } else if (line.contains("[WARN]")) {
+                    warn++;
+                } else if (line.contains("[ERROR]")) {
+                    error++;
+                } else if (line.contains("[FATAL]")) {
+                    fatal++;
+                }
+            }
+            String summary = "Log summary for " + id + ".txt:\n" +
+                    "INFO: " + info + "\n" +
+                    "WARN: " + warn + "\n" +
+                    "ERROR: " + error + "\n" +
+                    "FATAL: " + fatal;
+            if (error > 0 || fatal > 0) {
+                System.out.println("Log contains errors or fatal errors. Please make sure to check the log file for more information");
+            }
+            System.out.println(summary);
+        }
+
+        @NotNull
+        private static List<String> getStrings(Integer id) {
+            File logFile = new File(logDir, id + ".txt");
+            if (!logFile.exists()) throw new RuntimeException("Log file does not exist");
+            List<String> lines = new ArrayList<>();
+            FileReader logReader;
+            try {
+                logReader = new FileReader(logFile);
+                BufferedReader logBuffer = new BufferedReader(logReader);
+                String line;
+                while ((line = logBuffer.readLine()) != null) {
+                    lines.add(line);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return lines;
+        }
+
+        public static void uploadLogs() {
+            //TODO
+        }
+    }
+    public enum LogLevel {
+        INFO,
+        WARN,
+        ERROR,
+        FATAL
+    }
+}
