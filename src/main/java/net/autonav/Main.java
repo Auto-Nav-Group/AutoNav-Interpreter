@@ -1,21 +1,16 @@
 package net.autonav;
 
-import net.autonav.HTTP.HTTPManager;
-import net.autonav.Subsystems.RBTSystem;
-import net.autonav.Utils.MathUtils;
-
 import java.io.IOException;
 
 public class Main {
-    CollectData data = new CollectData();
 
     public static void main(String[] args) throws IOException {
-        HTTPManager.initConnections();
-        RBTSystem.Logs.newLog();
-        RBTSystem.Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
-        RBTSystem.Logs.log("Initializing HTTP connections", RBTSystem.LogLevel.FATAL);
-        RBTSystem.Logs.analyzeLog(2);
+        net.autonav.HTTP.HTTPManager.initConnections();
+        // net.autonav.Subsystems.RBTSystem.Logs.newLog();
+        // net.autonav.Subsystems.RBTSystem.Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
+        // net.autonav.Subsystems.RBTSystem.Logs.log("Initializing HTTP connections", RBTSystem.LogLevel.FATAL);
+        // net.autonav.Subsystems.RBTSystem.Logs.analyzeLog(2);
 
-        MathUtils.calculateTheta();
+        net.autonav.Utils.MathUtils.calculateTheta();
     }
 }
