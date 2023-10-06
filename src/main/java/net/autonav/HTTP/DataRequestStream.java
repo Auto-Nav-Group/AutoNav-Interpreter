@@ -10,6 +10,10 @@ public class DataRequestStream {
         server.createContext("/data", new DataHandler());
     }
 
+    public static void closeConnection() {
+        server.removeContext("/data");
+    }
+
     static class DataHandler implements com.sun.net.httpserver.HttpHandler {
         private final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         @Override

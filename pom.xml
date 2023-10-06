@@ -19,6 +19,16 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.ejml</groupId>
+      <artifactId>ejml-simple</artifactId>
+      <version>0.43.1</version>
+    </dependency>
+    <dependency>
+      <groupId>net.samuelcampos</groupId>
+      <artifactId>usbdrivedetector</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>

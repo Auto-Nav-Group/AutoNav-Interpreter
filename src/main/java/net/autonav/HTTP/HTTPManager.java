@@ -13,7 +13,7 @@ import java.util.Map;
 public class HTTPManager {
     public static HttpServer server;
 
-    static {
+    private static void startServer() { 
         try {
             server = HttpServer.create(new java.net.InetSocketAddress(8080), 0);
             server.setExecutor(null);
@@ -21,6 +21,10 @@ public class HTTPManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void stopServer() {
+        server.stop(0);
     }
 
     public static void handleHttpExchange(@NotNull HttpExchange t, ObjectMapper mapper) throws IOException {
@@ -39,6 +43,7 @@ public class HTTPManager {
     }
 
     public static void initConnections() throws IOException {
+        startServer();
         DataRequestStream.initConnection();
         OverrideStream.initConnection();
         MalfunctionStream.initConnection();
@@ -53,6 +58,7 @@ public class HTTPManager {
         MalfunctionStream.closeConnection();
         CommandStream.closeConnection();
         MovementStream.closeConnection();
+        stopServer();
         System.out.println("All streams closed");
     }
 }

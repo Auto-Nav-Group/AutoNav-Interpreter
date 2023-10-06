@@ -10,6 +10,10 @@ public class MalfunctionStream {
         System.out.println("Malfunction Stream started at port 8080");
         server.createContext("/malfunction", new MalfunctionHandler());
     }
+    
+    public static void closeConnection() {
+        server.removeContext("/malfunction");
+    }
 
 
     static class MalfunctionHandler implements com.sun.net.httpserver.HttpHandler {

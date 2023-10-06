@@ -1,7 +1,14 @@
 package net.autonav.Subsystems;
 
 import jakarta.persistence.Id;
+import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
+import net.samuelcampos.usbdrivedetector.USBStorageDevice;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +18,10 @@ import java.util.Objects;
 public class RBTSystem {
     public static void convControl() {}
 
-    static class Streams {}
+    public static class Movement {
+        
+    }
+
     public static class Logs {
         @Id
         private static int id;
@@ -111,10 +121,34 @@ public class RBTSystem {
             return lines;
         }
 
-        public static void uploadLogs() {
-            //TODO
+        public static void uploadFileToDrive(String filePath) {
+            USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
+            List<USBStorageDevice> drives = new ArrayList<>();
+            for (Object drive : driveDetector.getRemovableDevices()) {
+                drives.add((USBStorageDevice) drive);
+            }
+            driveDetector.addDriveListener(System.out::println);
+
+            USBStorageDevice drive = drives.get(0);
+
+            if (!drive.canWrite()) {
+                RBTSystem.Logs.log("The selected drive is not writable.", LogLevel.ERROR);
+                return;
+            }
+
+            Path sourcePath = Paths.get(filePath);
+
+            Path targetPath = Paths.get(drive.getRootDirectory().getPath(), sourcePath.getFileName().toString());
+
+            try {
+                Files.copy(sourcePath, targetPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                RBTSystem.Logs.log("Failed to copy file to drive", LogLevel.ERROR);
+            }
         }
     }
+
     public enum LogLevel {
         INFO,
         WARN,

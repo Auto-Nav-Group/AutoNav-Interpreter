@@ -11,6 +11,10 @@ public class CommandStream {
         server.createContext("/command", new CommandHandler());
     }
 
+    public static void closeConnection() {
+        server.removeContext("/command");
+    }
+
     static class CommandHandler implements com.sun.net.httpserver.HttpHandler {
         private final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         @Override

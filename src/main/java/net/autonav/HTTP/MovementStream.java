@@ -16,6 +16,10 @@ public class MovementStream {
         server.createContext("/movement", new MovementHandler());
     }
 
+    public static void closeConnection() {
+        server.removeContext("/movement");
+    }
+
     static class MovementHandler implements HttpHandler {
         private final ObjectMapper mapper = new ObjectMapper();
         @Override
