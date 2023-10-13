@@ -1,6 +1,5 @@
 package net.autonav.Queue;
 
-import java.awt.desktop.ScreenSleepEvent;
 import java.util.PriorityQueue;
 
 public class Queue {

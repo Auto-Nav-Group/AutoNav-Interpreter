@@ -16,7 +16,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class RBTSystem {
-    public static void convControl() {}
+    public static Controllers controller; //TODO: set on startup
+    
+    public static class Controller {
+        public static void toggleController() {
+            if (controller == Controllers.HUMAN) {
+                controller = Controllers.AUTONOMOUS;
+            } else {
+                controller = Controllers.HUMAN;
+            }
+        }
+
+        public static void setController(Controllers controller) {
+            RBTSystem.controller = controller;
+        }
+    }
 
     public static class Movement {
         
@@ -154,5 +168,10 @@ public class RBTSystem {
         WARN,
         ERROR,
         FATAL
+    }
+
+    public enum Controllers {
+        HUMAN, 
+        AUTONOMOUS
     }
 }
