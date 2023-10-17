@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 public class HTTPManager {
     public static HttpServer server;

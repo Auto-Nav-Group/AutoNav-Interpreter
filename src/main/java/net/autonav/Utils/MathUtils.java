@@ -14,10 +14,8 @@ public class MathUtils {
         double yaw = Math.atan2(relativePosY, relativePosX);
         double theta = Math.toDegrees(yaw);
 
-        double adjustedTheta = theta < -270 / 2 ? theta + 360 : theta;
-
+        double adjustedTheta = theta < (double) -270 / 2 ? theta + 360 : theta;
 
         System.out.println(adjustedTheta);
     }
-
 }

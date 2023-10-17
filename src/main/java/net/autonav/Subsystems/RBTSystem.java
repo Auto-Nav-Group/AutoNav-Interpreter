@@ -22,13 +22,21 @@ public class RBTSystem {
         public static void toggleController() {
             if (controller == Controllers.HUMAN) {
                 controller = Controllers.AUTONOMOUS;
+                Logs.log("Controller set to autonomous", LogLevel.INFO);
             } else {
                 controller = Controllers.HUMAN;
+                Logs.log("Controller set to human", LogLevel.INFO);
             }
         }
 
         public static void setController(Controllers controller) {
             RBTSystem.controller = controller;
+            Logs.log("Controller set to " + controller, LogLevel.INFO);
+        }
+
+        public static Controllers getController() {
+            Logs.log("Controller requested", LogLevel.INFO);
+            return controller;
         }
     }
 
@@ -72,6 +80,7 @@ public class RBTSystem {
                 FileWriter logWriter = new FileWriter(logFile, true);
                 logWriter.write("[" + level + "] " + log + "\n");
                 logWriter.close();
+                System.out.println("[" + level + "] " + log);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
