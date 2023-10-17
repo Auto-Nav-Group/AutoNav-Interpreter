@@ -18,11 +18,7 @@ public class Main {
         HTTPManager.initConnections();
         Logs.newLog();
         Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
-//        RBTSystem.Controller.set();
+        RBTSystem.Controller.load(); //TODO for maps: make sure that when you write a map that you overwrite the existing one
         net.autonav.Utils.MathUtils.calculateTheta();
-        List<String> list = new ArrayList<>();
-        System.out.println(list);
-        ListUtils.load(list);
-        System.out.println(list);
     }
 }

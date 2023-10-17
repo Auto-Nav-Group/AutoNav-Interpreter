@@ -19,6 +19,7 @@ public class RBTSystem {
     public static Controllers controller; //TODO: set on startup
     
     public static class Controller {
+        private static File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\controller.txt");
         public static void toggleController() {
             if (controller == Controllers.HUMAN) {
                 controller = Controllers.AUTONOMOUS;
@@ -31,12 +32,38 @@ public class RBTSystem {
 
         public static void set(Controllers controller) {
             RBTSystem.controller = controller;
-            Logs.log("Controller set to " + controller, LogLevel.INFO);
+            try {
+                FileWriter savesWriter = new FileWriter(saves);
+                savesWriter.write(controller.toString());
+                savesWriter.close();
+                Logs.log("Controller set to " + controller, LogLevel.INFO);
+            } catch (IOException e) {
+                Logs.log("Failed to set controller to " + controller, LogLevel.ERROR);
+            }
         }
 
         public static Controllers getController() {
             Logs.log("Controller requested", LogLevel.INFO);
             return controller;
+        }
+
+        public static void load() {
+            try {
+                FileReader savesReader = new FileReader(saves);
+                BufferedReader savesBuffer = new BufferedReader(savesReader);
+                String line;
+                while ((line = savesBuffer.readLine()) != null) {
+                    if (line.equals("HUMAN")) {
+                        controller = Controllers.HUMAN;
+                    } else if (line.equals("AUTONOMOUS")) {
+                        controller = Controllers.AUTONOMOUS;
+                    }
+                }
+                savesReader.close();
+                savesBuffer.close();
+            } catch (IOException e) {
+                Logs.log("Failed to load controller", LogLevel.ERROR);
+            }
         }
     }
 
