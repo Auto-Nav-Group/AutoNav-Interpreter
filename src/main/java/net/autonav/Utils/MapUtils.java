@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class MapUtil {
+public class MapUtils {
     public static File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\saves.txt");
     static {
         if (!saves.exists()) {

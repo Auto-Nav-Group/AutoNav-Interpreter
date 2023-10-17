@@ -29,7 +29,7 @@ public class RBTSystem {
             }
         }
 
-        public static void setController(Controllers controller) {
+        public static void set(Controllers controller) {
             RBTSystem.controller = controller;
             Logs.log("Controller set to " + controller, LogLevel.INFO);
         }

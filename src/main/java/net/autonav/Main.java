@@ -1,12 +1,16 @@
 package net.autonav;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.autonav.Subsystems.RBTSystem.Logs;
 import net.autonav.Subsystems.RBTSystem;
 import net.autonav.HTTP.HTTPManager;
+import net.autonav.Utils.ListUtils;
+import net.autonav.Utils.MapUtils;
 
 public class Main {
 
@@ -14,11 +18,11 @@ public class Main {
         HTTPManager.initConnections();
         Logs.newLog();
         Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
-        //TODO: read current controller value and default controller value and set it to that + print to log
+//        RBTSystem.Controller.set();
         net.autonav.Utils.MathUtils.calculateTheta();
-        Map<String, String> map = new HashMap<>();
-        System.out.println(map);
-        net.autonav.Utils.MapUtil.load(map);
-        System.out.println(map);
+        List<String> list = new ArrayList<>();
+        System.out.println(list);
+        ListUtils.load(list);
+        System.out.println(list);
     }
 }
