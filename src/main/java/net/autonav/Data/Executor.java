@@ -32,12 +32,12 @@ public class Executor {
             }
             case SYSTEM -> {
                 switch (command) {
-                case CONV_CONTROL -> {}
-                case STREAMS_STOP -> {}
-                case STREAMS_START -> {}
-                case LOGS_ANALYZE -> {}
-                case LOGS_UPLOAD -> {}
-            }
+                    case CONV_CONTROL -> {}
+                    case STREAMS_STOP -> {}
+                    case STREAMS_START -> {}
+                    case LOGS_ANALYZE -> {}
+                    case LOGS_UPLOAD -> {}
+                }
             }
         }
     }

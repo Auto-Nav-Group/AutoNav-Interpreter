@@ -16,7 +16,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class RBTSystem {
-    public static Controllers controller; //TODO: set on startup
+    public static Controllers controller; 
+    /*
+     * TODO: Set on startup
+     * TODO: Make variable utils to store this on restart
+     */
     
     public static class Controller {
         private static File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\controller.txt");
@@ -196,6 +200,12 @@ public class RBTSystem {
                 e.printStackTrace();
                 RBTSystem.Logs.log("Failed to copy file to drive", LogLevel.ERROR);
             }
+        }
+    }
+
+    public static class CommandHandler {
+        public static void execute(String[] command) {
+            
         }
     }
 
