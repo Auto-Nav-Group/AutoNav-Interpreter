@@ -106,6 +106,10 @@ public class RBTSystem {
             }
         }
 
+        public static Integer currentLog() {
+            return id;
+        }
+
         public static void log(String log, LogLevel level) {
             try {
                 FileWriter logWriter = new FileWriter(logFile, true);
@@ -175,7 +179,20 @@ public class RBTSystem {
             return lines;
         }
 
-        public static void uploadFileToDrive(String filePath) {
+        public static void uploadLog() throws IOException {
+            uploadFileToDrive(logFile.getAbsolutePath());
+        }
+
+        public static void uploadLog(int id) throws IOException {
+            try {
+                File logFile = new File(logDir, id + ".txt");
+                uploadFileToDrive(logFile.getAbsolutePath());
+            } catch (Exception e) {
+                log("Cannot find log", LogLevel.ERROR);
+            }
+        }
+
+        public static void uploadFileToDrive(String filePath) throws IOException {
             USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
             List<USBStorageDevice> drives = new ArrayList<>();
             for (Object drive : driveDetector.getRemovableDevices()) {
@@ -187,6 +204,7 @@ public class RBTSystem {
 
             if (!drive.canWrite()) {
                 RBTSystem.Logs.log("The selected drive is not writable.", LogLevel.ERROR);
+                driveDetector.close();
                 return;
             }
 
@@ -196,9 +214,11 @@ public class RBTSystem {
 
             try {
                 Files.copy(sourcePath, targetPath);
+                driveDetector.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 RBTSystem.Logs.log("Failed to copy file to drive", LogLevel.ERROR);
+                driveDetector.close();
             }
         }
     }
