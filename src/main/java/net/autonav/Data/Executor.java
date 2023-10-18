@@ -1,11 +1,15 @@
 package net.autonav.Data;
 
+import java.io.IOException;
+
 import net.autonav.Enums.Commands;
 import net.autonav.Enums.Subsystems;
+import net.autonav.HTTP.HTTPManager;
 import net.autonav.Queue.Queue;
+import net.autonav.Subsystems.RBTSystem;
 
 public class Executor {
-    public void execute() {
+    public void execute() throws IOException {
         String[] data = new ParseData(Queue.queue.poll()).parseData();
         String targetStr = data[0];
         String commandStr = data[1];
@@ -32,11 +36,25 @@ public class Executor {
             }
             case SYSTEM -> {
                 switch (command) {
-                    case CONV_CONTROL -> {}
-                    case STREAMS_STOP -> {}
-                    case STREAMS_START -> {}
-                    case LOGS_ANALYZE -> {}
-                    case LOGS_UPLOAD -> {}
+                    case CONV_CONTROL -> {
+                        RBTSystem.Controller.set(RBTSystem.Controllers.valueOf(value.toUpperCase()));
+                    }
+                    case STREAMS_STOP -> {
+                        HTTPManager.closeConnections();
+                    }
+                    case STREAMS_START -> {
+                        HTTPManager.initConnections();
+                    }
+                    case LOGS_ANALYZE -> {
+                        RBTSystem.Logs.analyzeLog(RBTSystem.Logs.currentLog());
+                    }
+                    case LOGS_UPLOAD -> {
+                        if (value == "-1") {
+                            RBTSystem.Logs.uploadLog();
+                        } else {
+                            RBTSystem.Logs.uploadLog(Integer.parseInt(value));
+                        }
+                    }
                 }
             }
         }
