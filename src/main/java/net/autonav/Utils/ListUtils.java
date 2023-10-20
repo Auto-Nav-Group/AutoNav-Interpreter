@@ -18,6 +18,10 @@ public class ListUtils {
         }
     }
 
+    /**
+     * Saves the list to a file
+     * @param list List to save
+     */
     public static void save(List list) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saves));
@@ -28,6 +32,10 @@ public class ListUtils {
         }
     }
 
+    /**
+     * Loads the list from a file
+     * @param list List to load
+     */
     public static void load(List list) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saves));

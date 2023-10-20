@@ -1,6 +1,10 @@
 package net.autonav.Utils;
 
 public class MathUtils {
+    /**
+     * Calculates the angle between the robot and the April Tag
+     * TODO: Add params, make more accurate, and return value
+     */
     public static void calculateTheta() {
         double cX = 10; // C denotes camera coords
         double cY = 4;

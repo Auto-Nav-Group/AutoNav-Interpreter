@@ -1,5 +1,9 @@
 package net.autonav.Enums;
 
+
+/**
+ * Enum for commands that can be sent to the robot from the AutoNav server
+ */
 public enum Commands {
     CHANGE_HEADING,
     CHANGE_VELOCITY,

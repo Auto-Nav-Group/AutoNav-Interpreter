@@ -8,7 +8,22 @@ import net.autonav.HTTP.HTTPManager;
 import net.autonav.Queue.Queue;
 import net.autonav.Subsystems.RBTSystem;
 
+
+/**
+ * Responsible for executing commands from the queue
+ * 
+ * <li>Adding commands to queue requires a JSON object with the following fields:
+ * <ul>
+ * <li>target: String
+ * <li>type: String
+ * <li>value: String
+ * </ul>
+ */
 public class Executor {
+    /**
+     * Executes the command from the queue
+     * @throws IOException
+     */
     public void execute() throws IOException {
         String[] data = new ParseData(Queue.queue.poll()).parseData();
         String targetStr = data[0];

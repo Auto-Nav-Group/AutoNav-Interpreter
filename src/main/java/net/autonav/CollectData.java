@@ -3,6 +3,9 @@ package net.autonav;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class for collecting data from the robot
+ */
 public class CollectData {
     private Map<String, String> data = new HashMap<>();
 
@@ -10,10 +13,10 @@ public class CollectData {
     private short pitch;
     private String id = genID();
 
-    private void collectData() {
-        //TODO: Set field data
-    }
-
+    /**
+     * Generates a random ID for actions
+     * @return String ID
+     */
     protected String genID() {
         int n = 6;
         String alphaStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

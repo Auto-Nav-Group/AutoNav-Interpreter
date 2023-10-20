@@ -2,11 +2,20 @@ package net.autonav.Queue;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class for the data that is inserted into the queue
+ */
 public class QueueInput implements Comparable<QueueInput> {
     private String id;
     private int priority;
     private String data;
 
+    /**
+     * Constructor for QueueInput
+     * @param id String id of the data
+     * @param priority Integer priority of the data
+     * @param data String data
+     */
     public QueueInput(String id, int priority, String data) {
         this.id = id;
         this.priority = priority;
@@ -24,6 +33,11 @@ public class QueueInput implements Comparable<QueueInput> {
         }
     }
 
+    /**
+     * Compares the priority of the QueueInput objects
+     * @param o QueueInput object
+     * @return int 1 if o is greater than this.priority, -1 if o is less than this.priority
+     */
     @Override
     public int compareTo(@NotNull QueueInput o) {
         return o.priority > this.priority ? 1 : -1;

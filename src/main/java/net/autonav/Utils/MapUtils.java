@@ -20,6 +20,10 @@ public class MapUtils {
     }
     public static Map<String, Map> maps = new HashMap<>();
 
+    /**
+     * Saves the map to a file
+     * @param map Map to save
+     */
     public static void save(Map map) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saves));
@@ -31,6 +35,10 @@ public class MapUtils {
         }
     }
 
+    /**
+     * Loads the map from a file
+     * @param map Map to load
+     */
     public static void load(Map map) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saves));
@@ -38,6 +46,7 @@ public class MapUtils {
             if (readMap instanceof Map) {
                 map.putAll((HashMap) readMap);
             }
+            ois.close();
         } catch (Exception e) {
             RBTSystem.Logs.log("Failed to load map " + map.get("name"), RBTSystem.LogLevel.ERROR);
         }

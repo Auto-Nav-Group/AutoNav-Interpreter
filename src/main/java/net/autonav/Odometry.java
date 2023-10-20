@@ -1,5 +1,8 @@
 package net.autonav;
 
+/**
+ * Class for storing odometry data
+ */
 public class Odometry {
     //TODO: get position relative to 0, 0 (april tags)
     private float x;

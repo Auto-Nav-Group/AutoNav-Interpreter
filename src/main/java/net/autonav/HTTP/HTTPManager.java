@@ -12,6 +12,9 @@ import java.io.InputStream;
 public class HTTPManager {
     public static HttpServer server;
 
+    /**
+     * Starts the HTTP server on port 8080
+     */
     private static void startServer() { 
         try {
             server = HttpServer.create(new java.net.InetSocketAddress(8080), 0);
@@ -22,10 +25,19 @@ public class HTTPManager {
         }
     }
 
+    /**
+     * Stops the HTTP server
+     */
     private static void stopServer() {
         server.stop(0);
     }
 
+    /**
+     * Handles the HTTP exchange
+     * @param t HttpExchange object
+     * @param mapper ObjectMapper object
+     * @throws IOException
+     */
     public static void handleHttpExchange(@NotNull HttpExchange t, ObjectMapper mapper) throws IOException {
         InputStream is = t.getRequestBody();
         StringBuilder reqBody = new StringBuilder();
@@ -41,22 +53,21 @@ public class HTTPManager {
         InsertToQueue.insert();
     }
 
+    /**
+     * Initializes the HTTP server and streams
+     * @throws IOException
+     */
     public static void initConnections() throws IOException {
         startServer();
-        DataRequestStream.initConnection();
-        OverrideStream.initConnection();
-        MalfunctionStream.initConnection();
-        CommandStream.initConnection();
-        MovementStream.initConnection();
+        StreamInit.initConnection();
         System.out.println("All streams started");
     }
 
+    /**
+     * Closes the HTTP server and streams
+     */
     public static void closeConnections() {
-        DataRequestStream.closeConnection();
-        OverrideStream.closeConnection();
-        MalfunctionStream.closeConnection();
-        CommandStream.closeConnection();
-        MovementStream.closeConnection();
+        StreamInit.closeConnection();
         stopServer();
         System.out.println("All streams closed");
     }

@@ -1,10 +1,20 @@
 package net.autonav.Enums.InterfaceCommands;
 
+
+/**
+ * Enum for commands that can be sent to the robot from the user interface
+ */
 public enum IntCommands {
     CONTROl,
     STREAMS,
     LOGS,
     LIDAR_RAW,
-    ROBOT_VELOCITY, // only GET
-    ROBOT_HEADING // only GET
+    /**
+     * Only GET
+     */
+    ROBOT_VELOCITY, 
+    /**
+     * Only GET
+     */
+    ROBOT_HEADING
 }

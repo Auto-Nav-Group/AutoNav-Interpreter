@@ -22,8 +22,14 @@ public class RBTSystem {
      * TODO: Make variable utils to store this on restart
      */
     
+    /**
+     * Controller handler class
+     */
     public static class Controller {
         private static File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\controller.txt");
+        /**
+         * Toggles the controller between human and autonomous
+         */
         public static void toggleController() {
             if (controller == Controllers.HUMAN) {
                 controller = Controllers.AUTONOMOUS;
@@ -34,6 +40,10 @@ public class RBTSystem {
             }
         }
 
+        /**
+         * Sets the controller to the specified controller
+         * @param controller Controllers enum
+         */
         public static void set(Controllers controller) {
             RBTSystem.controller = controller;
             try {
@@ -46,11 +56,18 @@ public class RBTSystem {
             }
         }
 
+        /**
+         * Gets the current controller
+         * @return Current controller of type Controllers
+         */
         public static Controllers getController() {
             Logs.log("Controller requested", LogLevel.INFO);
             return controller;
         }
 
+        /**
+         * Loads the controller from the saves file
+         */
         public static void load() {
             try {
                 FileReader savesReader = new FileReader(saves);
@@ -75,6 +92,9 @@ public class RBTSystem {
         
     }
 
+    /**
+     * Log handler class
+     */
     public static class Logs {
         @Id
         private static int id;
@@ -88,6 +108,9 @@ public class RBTSystem {
         }
         private static final File logFile = new File(logDir, id + ".txt");
 
+        /**
+         * Creates a new log file
+         */
         public static void newLog() {
             if (!logFile.exists()) {
                 try {
@@ -106,10 +129,19 @@ public class RBTSystem {
             }
         }
 
+        /**
+         * Gets the current log file
+         * @return Current log file id
+         */
         public static Integer currentLog() {
             return id;
         }
 
+        /**
+         * Logs the specified String and coresponding LogLevel to current log file
+         * @param log String log
+         * @param level LogLevel enum
+         */
         public static void log(String log, LogLevel level) {
             try {
                 FileWriter logWriter = new FileWriter(logFile, true);
@@ -121,6 +153,12 @@ public class RBTSystem {
             }
         }
 
+        /**
+         * Logs the specified String and coresponding LogLevel to specified log file
+         * @param log String log
+         * @param level LogLevel enum
+         * @param id Integer id of log file
+         */
         public static void log(String log, LogLevel level, Integer id) {
             try {
                 File logFile = new File(logDir, id + ".txt");
@@ -132,6 +170,11 @@ public class RBTSystem {
             }
         }
 
+        /**
+         * Analyzes the current log file
+         * TODO: Log this to the interface
+         * @param id Integer id of log file
+         */
         public static void analyzeLog(Integer id) {
             List<String> lines = getStrings(id);
             int info = 0;
@@ -179,10 +222,19 @@ public class RBTSystem {
             return lines;
         }
 
+        /**
+         * Uploads the current log file to the current drive connected
+         * @throws IOException
+         */
         public static void uploadLog() throws IOException {
             uploadFileToDrive(logFile.getAbsolutePath());
         }
 
+        /**
+         * Uploads the specified log file to the current drive connected
+         * @param id Integer id of log file
+         * @throws IOException
+         */
         public static void uploadLog(int id) throws IOException {
             try {
                 File logFile = new File(logDir, id + ".txt");

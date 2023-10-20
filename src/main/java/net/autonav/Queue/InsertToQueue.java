@@ -5,13 +5,14 @@ import org.json.JSONObject;
 
 public class InsertToQueue {
     private static String data;
+
     public InsertToQueue(String data) {
         InsertToQueue.data = data;
     }
 
     /**
      * Packages the incoming data into the QueueInput object
-     * */
+    */
     public static void insert() {
         System.out.println("Inserting data into queue");
         int priority = 0;
@@ -30,6 +31,11 @@ public class InsertToQueue {
         Queue.insert(input);
     }
 
+    /**
+     * Parses the priority of the data for the queue
+     * @param json JSONObject of the data
+     * @return int priority
+     */
     private static int parsePriority(@NotNull JSONObject json) {
         if (json.getString("type").equals("malfunction")) {
             return 5;
