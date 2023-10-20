@@ -1,6 +1,5 @@
 package net.autonav.Subsystems;
 
-import jakarta.persistence.Id;
 import net.autonav.Data.InterfaceData;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.USBStorageDevice;
@@ -135,10 +134,20 @@ public class RBTSystem {
     }
 
     /**
+    * Handles Lidar interactions.
+    */
+    public static class Lidar {
+        private static char[] translate(char[] data) {
+            for (int i = 0; i < data.length; i++) {
+                
+            }
+        }
+    }
+
+    /**
      * Log handler class
      */
     public static class Logs {
-        @Id
         private static int id;
         private static final File logDir = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Logs");
         static {
