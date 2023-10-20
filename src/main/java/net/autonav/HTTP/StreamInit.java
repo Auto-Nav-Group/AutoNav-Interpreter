@@ -14,12 +14,12 @@ public class StreamInit {
      * Initializes the HTTP server and streams
      * Streams:
      * <ul>
-     * <li>Malfunction
-     * <li>Override
-     * <li>Movement
-     * <li>Data
-     * <li>Command
-     * <ul>
+     * <li>Malfunction</li>
+     * <li>Override</li>
+     * <li>Movement</li>
+     * <li>Data</li>
+     * <li>Command</li>
+     * </ul>
      * @throws IOException
      */
     public static void initConnection() throws IOException {

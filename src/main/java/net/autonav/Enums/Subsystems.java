@@ -6,10 +6,10 @@ public enum Subsystems {
     /**
      * System level interpretation including
      * <ul>
-     * <li>Logging
-     * <li>Streams
-     * <li>Basic communication protocols with robot, server, and interface
-     * <ul>
+     * <li>Logging</li>
+     * <li>Streams</li>
+     * <li>Basic communication protocols with robot, server, and interface</li>
+     * </ul>
      */
     SYSTEM
 }

@@ -12,7 +12,7 @@ import net.autonav.Subsystems.RBTSystem;
 /**
  * Responsible for executing commands from the queue
  * 
- * <li>Adding commands to queue requires a JSON object with the following fields:
+ * Adding commands to queue requires a JSON object with the following fields:
  * <ul>
  * <li>target: String
  * <li>type: String

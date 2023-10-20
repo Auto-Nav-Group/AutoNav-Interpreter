@@ -43,6 +43,7 @@ public class ListUtils {
             if (readList instanceof List) {
                 list.addAll((List) readList);
             }
+            ois.close();
         } catch (Exception e) {
             RBTSystem.Logs.log("Failed to load list", RBTSystem.LogLevel.ERROR);
         }

@@ -216,6 +216,7 @@ public class RBTSystem {
                 while ((line = logBuffer.readLine()) != null) {
                     lines.add(line);
                 }
+                logBuffer.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
