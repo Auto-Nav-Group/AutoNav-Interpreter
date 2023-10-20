@@ -15,9 +15,6 @@ public class Main {
         // Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
         // RBTSystem.Controller.load(); //TODO for maps: make sure that when you write a map that you overwrite the existing one (test this functionality later)
         // net.autonav.Utils.MathUtils.calculateTheta();
-        System.out.println(RBTSystem.Lidar.decode("1D"));
-
-
     }
 
     public static Main getInstance() {

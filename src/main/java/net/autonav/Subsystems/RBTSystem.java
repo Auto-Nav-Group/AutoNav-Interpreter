@@ -135,41 +135,11 @@ public class RBTSystem {
     }
 
     /**
-    * Handles Lidar interactions.
-    */
+     *
+     */
     public static class Lidar {
-        public static int decode(String input) {
-            StringBuilder decoded = new StringBuilder();
-        
-            for (int i = 0; i < input.length(); i++) {
-                decoded.append(Integer.toHexString(input.charAt(i)));
-            }
-        
-            String hexResult = decoded.toString().toUpperCase();
-            System.out.println("Hexadecimal Equivalent: " + hexResult);
-        
-            int hexValue = Integer.parseInt(hexResult, 16);
-        
-            // Only subtract 0x30 once from the total hex value
-            int subtractedValue = hexValue - 0x30;
-        
-            // Convert the subtracted value directly to a 6-bit binary string
-            String binaryResult = Integer.toBinaryString(subtractedValue);
-        
-            // Pad with leading zeros to ensure it's a 6-bit binary number
-            while (binaryResult.length() < 6) {
-                binaryResult = "0" + binaryResult;
-            }
-            System.out.println("6-bit Binary Equivalent: " + binaryResult);
-        
-            // Convert the binary to decimal
-            int decimalEquivalent = Integer.parseInt(binaryResult, 2);
-            System.out.println("Decimal Equivalent: " + decimalEquivalent);
-        
-            return decimalEquivalent;
-        }        
-    }
 
+    }
     /**
      * Log handler class
      */
