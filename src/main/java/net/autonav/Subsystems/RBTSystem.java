@@ -1,10 +1,19 @@
 package net.autonav.Subsystems;
 
 import jakarta.persistence.Id;
+import net.autonav.Data.InterfaceData;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.USBStorageDevice;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+
 import org.jetbrains.annotations.NotNull;
+
+import com.google.gson.Gson;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -92,6 +101,39 @@ public class RBTSystem {
         
     }
 
+    public static class Interface {
+        /**
+         * Sends the data to the interface
+         * <ul>
+         * <li>data[0]: Priority (String)</li>
+         * <li>data[1]: Data (String)</li>
+         * </ul>
+         * @param data Data to send
+         */
+        public static void sendData(String[] data) {
+            if (!validate(data)) return;
+            HttpClient client = HttpClientBuilder.create().build();
+            try {
+                HttpPost request = new HttpPost("http://localhost:8080"); //TODO: Change to acual interface url
+                InterfaceData interfaceData = new InterfaceData(data[0], data[1]);
+                Gson gson = new Gson();
+                StringEntity params = new StringEntity(gson.toJson(interfaceData));
+                request.addHeader("content-type", "application/json");
+                request.setEntity(params);
+                HttpResponse response = client.execute(request);
+                Logs.log("Sent data to interface", LogLevel.INFO);
+                Logs.log("Response: " + response, LogLevel.INFO);
+            } catch (Exception e) {
+                Logs.log("Failed to send data to interface", LogLevel.ERROR);
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static boolean validate(String[] data) {
+            return true;
+        }
+    }
+
     /**
      * Log handler class
      */
@@ -172,7 +214,6 @@ public class RBTSystem {
 
         /**
          * Analyzes the current log file
-         * TODO: Log this to the interface
          * @param id Integer id of log file
          */
         public static void analyzeLog(Integer id) {
@@ -198,9 +239,13 @@ public class RBTSystem {
                     "ERROR: " + error + "\n" +
                     "FATAL: " + fatal;
             if (error > 0 || fatal > 0) {
-                System.out.println("Log contains errors or fatal errors. Please make sure to check the log file for more information");
+                Logs.log(summary, LogLevel.WARN);
+                Interface.sendData(new String[]{"WARN", summary});
+            } else {
+                Interface.sendData(new String[]{"INFO", summary});
+                Logs.log(summary, LogLevel.INFO);
             }
-            System.out.println(summary);
+
         }
 
         @NotNull
