@@ -283,14 +283,23 @@ public class RBTSystem {
         /**
          * Uploads the specified log file to the current drive connected
          * @param id Integer id of log file
-         * @throws IOException
          */
-        public static void uploadLog(int id) throws IOException {
+        public static void uploadLog(int id) {
             try {
                 File logFile = new File(logDir, id + ".txt");
                 uploadFileToDrive(logFile.getAbsolutePath());
             } catch (Exception e) {
                 log("Cannot find log", LogLevel.ERROR);
+            }
+        }
+
+        public static void uploadLog(boolean all) throws IOException {
+            if (all) {
+                for (File file : Objects.requireNonNull(logDir.listFiles())) {
+                    if (file.exists()) {
+                        uploadFileToDrive(file.getAbsolutePath());
+                    }
+                }
             }
         }
 

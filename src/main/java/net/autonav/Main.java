@@ -16,7 +16,7 @@ public class Main {
         // RBTSystem.Controller.load(); //TODO for maps: make sure that when you write a map that you overwrite the existing one (test this functionality later)
         // net.autonav.Utils.MathUtils.calculateTheta();
 
-        RBTSystem.Logs.uploadLog();
+        RBTSystem.Logs.uploadLog(true);
     }
 
     public static Main getInstance() {
