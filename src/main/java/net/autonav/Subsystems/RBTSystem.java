@@ -19,9 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class RBTSystem {
     public static Controllers controller; 
@@ -143,8 +141,11 @@ public class RBTSystem {
      * Log handler class
      */
     public static class Logs {
+        public static boolean uploadLogsOnExit = false;
+        public static boolean deleteAllLogsOnExit = false;
         private static int id;
         private static final File logDir = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Logs");
+
         static {
             for (File file : Objects.requireNonNull(logDir.listFiles())) {
                 if (file.exists()) {
@@ -152,10 +153,12 @@ public class RBTSystem {
                 }
             }
         }
+
         private static final File logFile = new File(logDir, id + ".txt");
 
         /**
          * Creates a new log file
+         * WARNING: Can only be called once per program run
          */
         public static void newLog() {
             if (!logFile.exists()) {
@@ -177,6 +180,7 @@ public class RBTSystem {
 
         /**
          * Gets the current log file
+         *
          * @return Current log file id
          */
         public static Integer currentLog() {
@@ -185,7 +189,8 @@ public class RBTSystem {
 
         /**
          * Logs the specified String and coresponding LogLevel to current log file
-         * @param log String log
+         *
+         * @param log   String log
          * @param level LogLevel enum
          */
         public static void log(String log, LogLevel level) {
@@ -201,9 +206,10 @@ public class RBTSystem {
 
         /**
          * Logs the specified String and coresponding LogLevel to specified log file
-         * @param log String log
+         *
+         * @param log   String log
          * @param level LogLevel enum
-         * @param id Integer id of log file
+         * @param id    Integer id of log file
          */
         public static void log(String log, LogLevel level, Integer id) {
             try {
@@ -218,6 +224,7 @@ public class RBTSystem {
 
         /**
          * Analyzes the current log file
+         *
          * @param id Integer id of log file
          */
         public static void analyzeLog(Integer id) {
@@ -274,6 +281,7 @@ public class RBTSystem {
 
         /**
          * Uploads the current log file to the current drive connected
+         *
          * @throws IOException
          */
         public static void uploadLog() throws IOException {
@@ -282,6 +290,7 @@ public class RBTSystem {
 
         /**
          * Uploads the specified log file to the current drive connected
+         *
          * @param id Integer id of log file
          */
         public static void uploadLog(int id) {
@@ -320,7 +329,7 @@ public class RBTSystem {
             Path targetPath = Paths.get(drive.getRootDirectory().getPath(), sourcePath.getFileName().toString());
 
             if (Files.exists(targetPath)) {
-                RBTSystem.Logs.log("File already exists on drive", LogLevel.ERROR);
+                RBTSystem.Logs.log("File already exists on drive. Please clear storage drive " + drive.getSystemDisplayName(), LogLevel.ERROR);
                 driveDetector.close();
                 return;
             }
@@ -333,6 +342,35 @@ public class RBTSystem {
                 e.printStackTrace();
                 RBTSystem.Logs.log("Failed to copy file to drive", LogLevel.ERROR);
                 driveDetector.close();
+            }
+        }
+
+        public static void uploadLogsOnExit(boolean value) {
+            uploadLogsOnExit = value;
+        }
+
+        /**
+         * Sets to delete all log files on exit
+         * WARNING: Highly suggested to upload all logs first
+         * @param value Boolean value
+         */
+        public static void deleteLogs(boolean value) {
+            deleteAllLogsOnExit = value;
+        }
+        /**
+         * Deletes the specified log file
+         * System function
+         * @param all Integer id of log file
+         */
+        public static void deleteLogFile(boolean all) throws InterruptedException {
+            if (all) {
+                for (int i = currentLog(); i >= 0; i--) {
+                    File logFile = new File(logDir, i + ".txt");
+                    if (logFile.exists()) {
+                        Logs.log("Deleting log file " + i, LogLevel.INFO);
+                        logFile.delete();
+                    }
+                }
             }
         }
     }
