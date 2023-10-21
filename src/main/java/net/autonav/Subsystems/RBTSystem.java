@@ -4,7 +4,6 @@ import net.autonav.Data.InterfaceData;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.USBStorageDevice;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -35,7 +34,7 @@ public class RBTSystem {
      * Controller handler class
      */
     public static class Controller {
-        private static File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\controller.txt");
+        private static final File saves = new File("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\net\\autonav\\Utils\\controller.txt");
         /**
          * Toggles the controller between human and autonomous
          */
@@ -297,11 +296,7 @@ public class RBTSystem {
 
         public static void uploadFileToDrive(String filePath) throws IOException {
             USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
-            List<USBStorageDevice> drives = new ArrayList<>();
-            for (Object drive : driveDetector.getRemovableDevices()) {
-                drives.add((USBStorageDevice) drive);
-            }
-            driveDetector.addDriveListener(System.out::println);
+            List<USBStorageDevice> drives = new ArrayList<>(driveDetector.getRemovableDevices());
 
             USBStorageDevice drive = drives.get(0);
 
@@ -315,8 +310,15 @@ public class RBTSystem {
 
             Path targetPath = Paths.get(drive.getRootDirectory().getPath(), sourcePath.getFileName().toString());
 
+            if (Files.exists(targetPath)) {
+                RBTSystem.Logs.log("File already exists on drive", LogLevel.ERROR);
+                driveDetector.close();
+                return;
+            }
+
             try {
                 Files.copy(sourcePath, targetPath);
+                Logs.log("Copied file to drive", LogLevel.INFO);
                 driveDetector.close();
             } catch (IOException e) {
                 e.printStackTrace();
