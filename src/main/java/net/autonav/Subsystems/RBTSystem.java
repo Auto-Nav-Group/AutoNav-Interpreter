@@ -1,28 +1,16 @@
 package net.autonav.Subsystems;
 
-import net.autonav.Data.InterfaceData;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.USBStorageDevice;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-
 import org.jetbrains.annotations.NotNull;
-
-import com.google.gson.Gson;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.lang.StringBuilder;
-
 import java.io.*;
 import java.util.*;
-import java.net.*;
 
 
 public class RBTSystem {
