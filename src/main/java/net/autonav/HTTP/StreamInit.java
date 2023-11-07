@@ -23,7 +23,6 @@ public class StreamInit {
      * @throws IOException
      */
     public static void initConnection() throws IOException {
-        System.out.println("Streams started at port 8080");
         server.createContext("/malfunction", new Handler());
         server.createContext("/override", new Handler());
         server.createContext("/movement", new Handler());
@@ -55,7 +54,7 @@ public class StreamInit {
          */
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "Received Override Request";
+            String response = "OK";
             handleHttpExchange(t, mapper);
 
             t.sendResponseHeaders(200, response.length());

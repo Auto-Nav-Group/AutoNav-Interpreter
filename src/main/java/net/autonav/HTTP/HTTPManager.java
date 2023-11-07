@@ -3,7 +3,6 @@ package net.autonav.HTTP;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import net.autonav.Queue.InsertToQueue;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class HTTPManager {
      */
     private static void startServer() { 
         try {
-            server = HttpServer.create(new java.net.InetSocketAddress(8080), 0);
+            server = HttpServer.create(new java.net.InetSocketAddress(42344), 0);
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
@@ -33,6 +32,8 @@ public class HTTPManager {
     }
 
     /**
+     * TODO: Make each context process on their own thread
+     * 
      * Handles the HTTP exchange
      * @param t HttpExchange object
      * @param mapper ObjectMapper object
@@ -48,9 +49,7 @@ public class HTTPManager {
         }
 
         String data = reqBody.toString();
-        System.out.println(data);
-        new InsertToQueue(data);
-        InsertToQueue.insert();
+        
     }
 
     /**

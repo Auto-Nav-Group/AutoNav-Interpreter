@@ -1,43 +1,45 @@
 package net.autonav;
 
 import java.io.IOException;
-import java.math.BigInteger;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-import net.autonav.Subsystems.RBTSystem.Logs;
-import net.autonav.Subsystems.RBTSystem;
 import net.autonav.HTTP.HTTPManager;
 
 public class Main {
+    private static Main instance;
+    private static Logger logger = Logger.getLogger(Main.class.getName());
+    private static FileHandler fh;
 
-    public static void main(String[] args) throws IOException {
-         HTTPManager.initConnections();
-        // RBTSystem.Controller.load(); //TODO for maps: make sure that when you write a map that you overwrite the existing one (test this functionality later)
-
-        Logs.newLog();
-
-        Logs.log("Starting AutoNav Interpreter", RBTSystem.LogLevel.INFO);
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Logs.log("Shutting down AutoNav Interpreter", RBTSystem.LogLevel.INFO);
-            if (Logs.uploadLogsOnExit) {
-                try {
-                    Logs.uploadLog(true);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (Logs.deleteAllLogsOnExit) {
-                try {
-                    Logs.deleteLogFile(true);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }));
-
+    static {
+        try {
+            fh = new FileHandler("C:\\Users\\llluy\\OneDrive\\Documents\\GitHub\\AutoNav-Interpreter\\src\\main\\java\\n" + //
+                    "et\\autonav\\Logs\\main.log");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (SecurityException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    public static void main(String[] args) throws IOException {
+        HTTPManager.initConnections();
+        logger.info("Test");
+
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logger.severe("Attempting to upload logs to USB... if you do not have a USB inserted, please insert one and enable the program with log backup enabled to initiate a backup."); //TODO: Add USB backup
+        }));
+    }
+
+    
+
     public static Main getInstance() {
-        return new Main();
+        if (instance == null) {
+            instance = new Main();
+        }
+        return instance;
     }
 }
