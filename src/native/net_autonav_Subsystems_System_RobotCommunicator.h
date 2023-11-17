@@ -15,6 +15,22 @@ extern "C" {
 JNIEXPORT void JNICALL Java_net_autonav_Subsystems_System_RobotCommunicator_sendJoystickMovement
   (JNIEnv *, jclass, jchar, jfloat);
 
+/*
+ * Class:     net_autonav_Subsystems_System_RobotCommunicator
+ * Method:    subscribeRobotEvents
+ * Signature: (Z)V
+ */
+JNIEXPORT void JNICALL Java_net_autonav_Subsystems_System_RobotCommunicator_subscribeRobotEvents
+  (JNIEnv *, jclass, jboolean);
+
+/*
+ * Class:     net_autonav_Subsystems_System_RobotCommunicator
+ * Method:    setRobotController
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_net_autonav_Subsystems_System_RobotCommunicator_setRobotController
+  (JNIEnv *, jclass, jstring);
+
 #ifdef __cplusplus
 }
 #endif
