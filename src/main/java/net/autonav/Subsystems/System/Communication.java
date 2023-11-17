@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import com.google.gson.Gson;
 
 import net.autonav.Data.Odometry;
+import net.autonav.HTTP.ThreadManager;
 
 public class Communication {
     public static void send(Target target, String message) throws IOException {
@@ -50,12 +51,12 @@ public class Communication {
             String body = input[1];
 
             switch (type) { //TODO: Add more types as needed
-                case ("ODOMETRY") -> {
+                case ("ODOMETRY"): 
                     Gson gson = new Gson();
                     Odometry odometry = gson.fromJson(body, Odometry.class);
-                    //TODO: Handle odometry incomming
-                }
-            }
+                    ThreadManager.processMovement(odometry);
+                    break;
+            } 
 
             in.close();
         } catch (IOException e) {
@@ -69,4 +70,14 @@ public class Communication {
         SERVER, 
         ALL;
     }
+
+
+    // Communicating with the robot
+
+    static {
+        System.loadLibrary("RobotComms");
+    }
+
+    public static native void sendJoystickMovement(char joystick, double direction); //TODO: Add more parameters as needed
+    public static native void sendJoystickButton(char button); //TODO: Add more parameters as needed
 }

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import net.autonav.HTTP.HTTPManager;
+import net.autonav.Subsystems.System.RobotCommunicator;
 
 public class Main {
     private static Main instance;
@@ -28,6 +29,8 @@ public class Main {
         HTTPManager.initConnections();
         logger.info("Test");
 
+        RobotCommunicator.sendJoystickMovement('h', 0);
+        RobotCommunicator.subscribeRobotEvents(true); //TODO: make selector for this
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             logger.severe("Attempting to upload logs to USB... if you do not have a USB inserted, please insert one and enable the program with log backup enabled to initiate a backup."); //TODO: Add USB backup

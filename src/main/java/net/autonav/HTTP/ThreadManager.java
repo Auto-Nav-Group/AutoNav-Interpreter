@@ -3,9 +3,9 @@ package net.autonav.HTTP;
 import net.autonav.Data.Odometry;
 
 public class ThreadManager {
-    Thread odometryThread = new Thread();
+    Thread odometryThread = new Thread(); 
 
-    private static void processMovement(Odometry odometry) {
-        odometryThread // run some code on that thread
+    public static void processMovement(Odometry odometry) {
+        // run some code on that thread
     }
 }

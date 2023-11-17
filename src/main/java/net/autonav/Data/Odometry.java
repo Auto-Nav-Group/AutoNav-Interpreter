@@ -1,10 +1,18 @@
 package net.autonav.Data;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+
+import net.autonav.Enums.AutoPresets;
+
 /**
  * Data class to store relative robot position from (0, 0)
  * Data input sent from Lidar
  */
 public class Odometry {
+    public static BlockingQueue<Odometry> odometryQueue = new LinkedBlockingDeque<>();
+    public static Odometry currentOdometry = new Odometry(AutoPresets.PRESET_1); 
+    
     private float x;
     private float y;
     private float theta;
@@ -19,10 +27,32 @@ public class Odometry {
         this.x = x;
         this.y = y;
         this.theta = theta;
+        odometryQueue.add(this);
     }
 
+    //TODO: Add contstructors for preset auto paths
     public Odometry() {
         this(0, 0, 0);
+    }
+
+    public Odometry(AutoPresets preset) {
+        switch (preset) {
+            case PRESET_1:
+                this.x = 0;
+                this.y = 0;
+                this.theta = 0;
+                break;
+            case PRESET_2:
+                this.x = 0;
+                this.y = 0;
+                this.theta = 0;
+                break;
+            case PRESET_3:
+                this.x = 0;
+                this.y = 0;
+                this.theta = 0;
+                break;
+        } //TODO: Update these to use the valid preset vaules
     }
 
     public float getX() {

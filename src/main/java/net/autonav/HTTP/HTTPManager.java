@@ -16,7 +16,7 @@ public class HTTPManager {
      */
     private static void startServer() { 
         try {
-            server = HttpServer.create(new java.net.InetSocketAddress(42344), 0);
+            server = HttpServer.create(new java.net.InetSocketAddress(43242), 0);
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
