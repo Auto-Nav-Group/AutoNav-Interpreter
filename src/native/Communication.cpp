@@ -1,5 +1,5 @@
 #include "net_autonav_Subsystems_System_RobotCommunicator.h"
-#include "LibDS/include/LibDS.h"
+#include "FRCLibDS/include/LibDS.h"
 #include <stdio.h>
 #include <iostream>
 using namespace std;

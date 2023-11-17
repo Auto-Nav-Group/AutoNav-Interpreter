@@ -1,0 +1,6 @@
+[submodule "src/native/src/native/LibDS"]
+	path = src/native/src/native/LibDS
+	url = https://github.com/FRC-Utilities/LibDS.git
+[submodule "src/native/FRCLibDS"]
+	path = src/native/FRCLibDS
+	url = https://github.com/FRC-Utilities/LibDS.git
