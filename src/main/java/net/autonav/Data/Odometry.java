@@ -11,8 +11,8 @@ import net.autonav.Enums.AutoPresets;
  */
 public class Odometry {
     public static BlockingQueue<Odometry> odometryQueue = new LinkedBlockingDeque<>();
-    public static Odometry currentOdometry = new Odometry(AutoPresets.PRESET_1); 
-    
+    public static Odometry currentOdometry = new Odometry(8, 19, 173); 
+
     private float x;
     private float y;
     private float theta;

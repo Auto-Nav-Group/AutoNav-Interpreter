@@ -5,8 +5,10 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import net.autonav.Data.Odometry;
 import net.autonav.HTTP.HTTPManager;
 import net.autonav.Subsystems.System.RobotCommunicator;
+import net.autonav.Utils.MathUtils;
 
 public class Main {
     private static Main instance;
@@ -35,6 +37,8 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             logger.severe("Attempting to upload logs to USB... if you do not have a USB inserted, please insert one and enable the program with log backup enabled to initiate a backup."); //TODO: Add USB backup
         }));
+
+        MathUtils.moveProcedure(new Odometry(3, 4, 87));
     }
 
     
