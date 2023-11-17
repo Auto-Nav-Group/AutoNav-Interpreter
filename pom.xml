@@ -28,11 +28,6 @@
       <artifactId>json</artifactId>
       <version>20231013</version>
     </dependency>
-  <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.14.2</version>
-  </dependency>
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
@@ -97,6 +92,20 @@
     </pluginManagement>
     <plugins>
       <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.2.0</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <classpathPrefix>lib/</classpathPrefix>
+            <mainClass>net.autonav.Main</mainClass> <!-- Replace with your main class -->
+          </manifest>
+        </archive>
+      </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -104,6 +113,48 @@
           <target>11</target>
         </configuration>
       </plugin>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>3.1.2</version>
+      <executions>
+        <execution>
+          <id>unpack-dependencies</id>
+          <phase>package</phase>
+          <goals>
+            <goal>unpack-dependencies</goal>
+          </goals>
+          <configuration>
+            <includeScope>runtime</includeScope>
+            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+          </configuration>
+        </execution>
+      </executions>
+      </plugin>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <version>3.3.0</version>
+      <configuration>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+        <archive>
+          <manifest>
+            <mainClass>net.autonav.Main</mainClass> <!-- Replace with your main class -->
+          </manifest>
+        </archive>
+      </configuration>
+      <executions>
+        <execution>
+          <id>make-assembly</id>
+          <phase>package</phase>
+          <goals>
+            <goal>single</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -142,10 +193,11 @@
                     </goals>
                     <configuration>
                         <executable>g++</executable>
-                        <arguments> <!-- WARNING: THIS IS FOR WINDOWS. MUST CHANGE FOR LINUX-->
+                        <arguments> <!-- WARNING: THIS IS FOR LINUX. MUST CHANGE FOR WINDOWS OR OTHER OS-->
                             <argument>-c</argument>
-                            <argument>-I%JAVA_HOME%\include</argument>
-                            <argument>-I%JAVA_HOME%\include\win32</argument>
+                            <argument>-fPIC</argument>
+                            <argument>-I${JAVA_HOME}/include</argument>
+                            <argument>-I${JAVA_HOME}/include/linux</argument>
                             <argument>src/native/Communication.cpp</argument>
                             <argument>-o</argument>
                             <argument>src/native/Communication.o</argument>
@@ -163,9 +215,8 @@
                     <arguments> <!-- WARNING: THIS IS FOR WINDOWS. MUST CHANGE FOR LINUX-->
                         <argument>-shared</argument>
                         <argument>-o</argument>
-                        <argument>src/native/native.dll</argument>
+                        <argument>src/native/libnative.so</argument>
                         <argument>src/native/Communication.o</argument>
-                        <argument>-Wl,--add-stdcall-alias</argument>
                     </arguments>
                 </configuration>
                 </execution>

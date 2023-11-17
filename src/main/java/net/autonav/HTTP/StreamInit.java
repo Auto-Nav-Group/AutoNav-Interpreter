@@ -1,6 +1,5 @@
 package net.autonav.HTTP;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import static net.autonav.HTTP.HTTPManager.server;
@@ -45,7 +44,6 @@ public class StreamInit {
      * Handles the incomming HTTP data
      */
     static class Handler implements HttpHandler {
-        private final ObjectMapper mapper = new ObjectMapper();
         
         /**
          * Handles the HTTP exchange
@@ -55,7 +53,7 @@ public class StreamInit {
         @Override
         public void handle(HttpExchange t) throws IOException {
             String response = "OK";
-            handleHttpExchange(t, mapper);
+            handleHttpExchange(t);
 
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();

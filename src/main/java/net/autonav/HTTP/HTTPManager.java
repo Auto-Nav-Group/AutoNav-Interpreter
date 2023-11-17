@@ -1,6 +1,5 @@
 package net.autonav.HTTP;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +38,7 @@ public class HTTPManager {
      * @param mapper ObjectMapper object
      * @throws IOException
      */
-    public static void handleHttpExchange(@NotNull HttpExchange t, ObjectMapper mapper) throws IOException {
+    public static void handleHttpExchange(@NotNull HttpExchange t) throws IOException {
         InputStream is = t.getRequestBody();
         StringBuilder reqBody = new StringBuilder();
         int bytesRead;
