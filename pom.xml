@@ -135,19 +135,39 @@
             <version>1.6.0</version>
             <executions>
                 <execution>
-                    <id>compile-c-code</id>
+                    <id>compile-cpp</id>
                     <phase>compile</phase>
                     <goals>
                         <goal>exec</goal>
                     </goals>
                     <configuration>
-                        <executable>gcc</executable>
-                        <arguments>
+                        <executable>g++</executable>
+                        <arguments> <!-- WARNING: THIS IS FOR WINDOWS. MUST CHANGE FOR LINUX-->
+                            <argument>-c</argument>
+                            <argument>-I%JAVA_HOME%\include</argument>
+                            <argument>-I%JAVA_HOME%\include\win32</argument>
+                            <argument>src/native/Communication.cpp</argument>
                             <argument>-o</argument>
-                            <argument>${project.build.directory}../src/native/comm_exec</argument>
-                            <argument>${project.build.directory}../src/native/Communication.c</argument>
+                            <argument>src/native/Communication.o</argument>
                         </arguments>
                     </configuration>
+                </execution>
+                <execution>
+                  <id>link-cpp</id>
+                  <phase>compile</phase>
+                  <goals>
+                      <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                    <executable>g++</executable>
+                    <arguments> <!-- WARNING: THIS IS FOR WINDOWS. MUST CHANGE FOR LINUX-->
+                        <argument>-shared</argument>
+                        <argument>-o</argument>
+                        <argument>src/native/native.dll</argument>
+                        <argument>src/native/Communication.o</argument>
+                        <argument>-Wl,--add-stdcall-alias</argument>
+                    </arguments>
+                </configuration>
                 </execution>
             </executions>
         </plugin>
