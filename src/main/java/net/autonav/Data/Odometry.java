@@ -1,7 +1,7 @@
 package net.autonav.Data;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 import net.autonav.Enums.AutoPresets;
 
@@ -9,8 +9,7 @@ import net.autonav.Enums.AutoPresets;
  * Data class to store relative robot position from (0, 0)
  * Data input sent from Lidar
  */
-public class Odometry {
-    public static BlockingQueue<Odometry> odometryQueue = new LinkedBlockingDeque<>();
+public class Odometry implements Serializable {
     public static Odometry currentOdometry = new Odometry(8, 19, 173); 
 
     private float x;
@@ -27,14 +26,12 @@ public class Odometry {
         this.x = x;
         this.y = y;
         this.theta = theta;
-        odometryQueue.add(this);
     }
 
-    //TODO: Add contstructors for preset auto paths
     public Odometry() {
         this(0, 0, 0);
     }
-
+    
     public Odometry(AutoPresets preset) {
         switch (preset) {
             case PRESET_1:
@@ -65,5 +62,9 @@ public class Odometry {
 
     public float getTheta() {
         return theta;
+    }
+
+    public Point2D toPoint() {
+        return new Point2D.Float(x, y);
     }
 }

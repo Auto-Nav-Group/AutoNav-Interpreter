@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 
+list<int[]
 JNIEXPORT void JNICALL Java_net_autonav_Subsystems_System_RobotCommunicator_sendJoystickMovement
   (JNIEnv *env, jclass cls, jchar direction, jfloat speed) {
     std::cout << "Sending joystick movement" << std::endl;
@@ -36,7 +37,7 @@ JNIEXPORT void JNICALL Java_net_autonav_Subsystems_System_RobotCommunicator_setR
 int main() {
   DS_Init();
 
-  DS_ConfigureProtocol(DS_CurrentProtocol());
+  DS_ConfigureProtocol(DS_GetProtocolFRC_2020());
 
   DS_SetTeamNumber(293);
   return 0;
@@ -47,3 +48,8 @@ int main() {
 
 // LINUX LINK COMMAND:
 // g++ -shared -o libnative.so Communication.o
+
+// WINDOWS COMPILE COMMAND:
+// g++ -c -I%JAVA_HOME%\include -I%JAVA_HOME%\include\win32 Comminication.cpp -o Comunication.o
+
+// g++ -shared -o native.dll Communication.o -Wl,--add-stdcall-alias

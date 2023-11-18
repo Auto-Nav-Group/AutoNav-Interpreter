@@ -53,7 +53,7 @@ public class CubicSpline {
 
         List<Point2D> interpolatedPoints = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            for (double t = x[i]; t < x[i + 1]; t += 0.1) { // Adjust the step as necessary
+            for (double t = x[i]; t < x[i + 1]; t += 0.01) { // Adjust the step as necessary
                 double deltaX = t - x[i];
                 double interpolatedY = y[i] + b[i] * deltaX + c[i] * Math.pow(deltaX, 2) + d[i] * Math.pow(deltaX, 3);
                 interpolatedPoints.add(new Point2D.Double(t, interpolatedY));
