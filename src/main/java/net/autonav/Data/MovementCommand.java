@@ -1,19 +1,20 @@
 package net.autonav.Data;
 
 public class MovementCommand {
-    private Odometry odometry;
-    private float speed;
+    public static MovementCommand current = new MovementCommand(0, 0);
+    private float angularVelocity;
+    private float linearVelocity;
 
-    public MovementCommand(Odometry odometry, float speed) {
-        this.odometry = odometry;
-        this.speed = speed;
+    public MovementCommand(float angularVelocity, float linearVelocity) {
+        this.angularVelocity = angularVelocity;
+        this.linearVelocity = linearVelocity;
     }
 
-    public Odometry getOdometry() {
-        return odometry;
+    public float getAngularVelocity() {
+        return angularVelocity;
     }
 
-    public float getSpeed() {
-        return speed;
+    public float getLinearVelocity() {
+        return linearVelocity;
     }
 }

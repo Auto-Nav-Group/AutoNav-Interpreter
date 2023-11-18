@@ -8,7 +8,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import net.autonav.Data.MovementCommand;
-import net.autonav.Data.Odometry;
 
 public class Recieve {
     public static BlockingQueue<MovementCommand> movementQueue = new LinkedBlockingDeque<>();
