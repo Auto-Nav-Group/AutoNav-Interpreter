@@ -1,3 +1,0 @@
-[submodule "src/native/FRCLibDS"]
-	path = src/native/FRCLibDS
-	url = https://github.com/FRC-Utilities/LibDS.git
